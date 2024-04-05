@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-#read numbers and print factoring
+# Read numbers from file and print their factorizations
 
 FILE=$1
 
-while read NUMBS; 
-do
-	factors=($(factor $NUMBS))
-	echo "$NUMBS=$(($NUMBS/${factors[1]}))*${factors[1]}"
+while read NUMBS; do
+    factors=($(factor $NUMBS))
+    echo "$NUMBS=${factors[@]:1}"
 done < $FILE
