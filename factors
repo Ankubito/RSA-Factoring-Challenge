@@ -1,31 +1,7 @@
 #!/bin/bash
-# Read numbers from file and print their factorizations
-
-# Define a function to factorize a number
-factorize() {
-    local num=$1
-    local factors=$(factor $num)
-    echo "$num=${factors##* }"
-}
-
-# Main function to process the file
-process_file() {
-    local file=$1
-    while read -r num; do
-        factorize "$num"
-    done < "$file"
-}
-
-# Main execution starts here
-if [[ $# -eq 1 ]]; then
-    if [[ -f $1 ]]; then
-        # Run the main processing function with a time limit of 5 seconds
-        timeout 5s process_file "$1"
-    else
-        echo "Error: File '$1' not found." >&2
-        exit 1
-    fi
-else
-    echo "Usage: $0 <file>" >&2
-    exit 1
-fi
+FILE="$1"
+while read NUM; 
+do
+    factors=($(factor "$NUM"))
+    echo "$NUM=$((${factors[1]}/${factors[@]:1}))*${factors[@]:1}"
+done < "$FILE"
