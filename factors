@@ -3,6 +3,6 @@
 FILE=$1
 while read NUMBS; 
 do
-	factors=($(factor $NUMBS))
+	factors=($(factors $NUMBS))
 	echo "$NUMBS=$(($NUMBS/${factors[1]}))*${factors[1]}"
 done < $FILE
