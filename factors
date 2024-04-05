@@ -1,63 +1,7 @@
-import random
-import math
-
-def generate_prime_numbers(limit):
-    primes = []
-    for numb in range(2, limit):
-        prime = True
-        for a in range(2, int(math.sqrt(num)) + 1):
-            if numb % a == 0:
-                prime = False
-                break
-        if prime:
-            primes.append(num)
-    return primes
-
-def generate_p_and_q():
-    primes = generate_prime_numbers(101)
-    p = random.choice(primes)
-    primes.remove(p)
-    q = random.choice(primes)
-    return p, q
-
-def calculate_n_and_phi(p, q):
-    n = p * q
-    phi = (p - 1) * (q - 1)
-    return n, phi
-
-def generate_e(phi):
-    possible_e_values = [e for e in range(2, phi) if math.gcd(e, phi) == 1]
-    return random.choice(possible_e_values)
-
-def generate_d(e, phi):
-    for d in range(2, phi):
-        if (d * e) % phi == 1:
-            return d
-
-def encrypt(msg, e, n):
-    return pow(msg, e, n)
-
-def decrypt(ciphertext, d, n):
-    return pow(ciphertext, d, n)
-
-if __name__ == "__main__":
-    p, q = generate_p_and_q()
-    print(f'[+] p = {p} and q = {q}')
-    
-    n, phi = calculate_n_and_phi(p, q)
-    print(f'[+] n = {n} and euler totient = {phi}')
-    
-    e = generate_e(phi)
-    print(f'[+] e = {e}')
-    
-    d = generate_d(e, phi)
-    print(f'[+] d = {d}')
-    
-    msg = random.randint(1, n)
-    print(f'[+] msg : {msg}')
-    
-    e_msg = encrypt(msg, e, n)
-    print(f'[+] Encrypted msg : {e_msg}')
-    
-    d_msg = decrypt(e_msg, d, n)
-    print(f'[+] Decrypted msg : {d_msg}')
+#!/usr/bin/bash
+file=$1
+while read NUMBERS;
+do
+	factors=($(factor $NUMBER))
+	echo "$NUMBERS=$(($NUMBERS/${factors[1]}))*${factors[1]}"
+done < $file
