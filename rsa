@@ -5,9 +5,9 @@ if len(argv) < 2:
     print("Usage: <script>.py <filename>")
     exit(1)
 
-filename = argv[1]
+line = argv[1]
 
-with open(filename) as fd:
+with open(argv[1]) as fd:
     for line in fd:
         number = int(line.strip())
         print("{}=".format(number), end='')
