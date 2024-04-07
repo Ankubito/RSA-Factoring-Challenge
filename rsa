@@ -1,35 +1,27 @@
 #!/usr/bin/python3
-import sys
+from sys import argv
 
-def factorize(num):
-    for divisor in range(2, num + 1):
-        while num % divisor == 0:
-            yield divisor
-            num //= divisor
+if len(argv) < 2:
+    print("Usage: <script>.py <filename>")
+    exit(1)
 
-def main():
-    if len(sys.argv) < 2:
-        print("Usage: {} <filename>".format(sys.argv[0]))
-        sys.exit(1)
+filename = argv[1]
 
-    filename = sys.argv[1]
+with open(filename) as fd:
+    for line in fd:
+        number = int(line.strip())
+        print("{}=".format(number), end='')
 
-    with open(filename) as file:
-        for line in file:
-            try:
-                num = int(line.strip())
-            except ValueError:
-                print("Error: Invalid input '{}'".format(line.strip()))
-                continue
+        if number % 2 == 0:
+            print("{}*2".format(number // 2))
+        else:
+            for a in range(3, number, 2):
+                if number % a == 0:
+                    factor = number // a
+                    for b in range(3, factor, 2):
+                        if factor % b == 0:
+                            break
+                    else:
+                        print("{}*{}".format(a, factor))
+                        break
 
-            print("{}=".format(num), end='')
-
-            if num % 2 == 0:
-                print("{}*2".format(num // 2))
-                continue
-
-            factors = factorize(num)
-            print("*".join(map(str, factors)))
-
-if __name__ == "__main__":
-    main()
