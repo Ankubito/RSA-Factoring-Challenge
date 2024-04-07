@@ -1,20 +1,15 @@
-#!/usr/bin/bash
-
-file=$1
-while read NUM;
-do
-        factors=($(factor $NUMB))
-        echo "$NUM=$(($NUM/${factors[1]}))*${factors[1]}"
-done < $file
-
-
 #!/usr/bin/env bash
 
-file=$1
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $0 filename"
+    echo "provided a valid file as an argument."
+    exit 1
+fi
 
-if [[ -z "$file" || ! -f "$file" ]]; then
-    echo "Usage: $0 tests/test00"
-    echo "Provided a valid file as an argument."
+file="$1"
+
+if [[ ! -f "$file" ]]; then
+    echo "Error: File '$file' not found."
     exit 1
 fi
 
@@ -22,8 +17,8 @@ while IFS= read -r num; do
     read -ra factors <<< "$(factor "$num")"
     m_factor=${factors[1]}
     if [[ -n "$m_factor" ]]; then
-        quotient=$(($num / $m_factor))
-	echo "${num}=$({quotient}*${m_factor}\n)"
+        quotient=$((num / m_factor))
+        echo "${num}=${quotient}*${m_factor}"
     else
         echo "Error: Fails factor $num"
     fi
