@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from sys import argv
 
-with open(filename) as fd:
+with open(argv[1]) as fd:
     for line in fd:
         number = int(line.strip())
         print("{}=".format(number), end='')
