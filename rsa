@@ -1,13 +1,7 @@
 #!/usr/bin/python3
 from sys import argv
 
-if len(argv) < 2:
-    print("Usage: <script>.py <filename>")
-    exit(1)
-
-line = argv[1]
-
-with open(argv[1]) as fd:
+with open(filename) as fd:
     for line in fd:
         number = int(line.strip())
         print("{}=".format(number), end='')
